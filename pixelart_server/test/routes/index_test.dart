@@ -39,8 +39,12 @@ void main() {
     });
 
     test('create and read a PixelArt', () async {
-      // TODO: 1. use the repository and the testpixelart to attempt to create a pixelart, then attempt to read it. Verify responses uing expect
-      fail("unimplemented test");
+
+      CRUDResult<PixelArt> createResult = await repository.create(testPixelArt);
+      CRUDResult<PixelArt> readResult = await repository.read(testPixelArt.id);
+      expect(createResult.isSuccess, isTrue);
+      expect(readResult.isSuccess, isTrue);
+      expect(readResult.value, testPixelArt);
     });
 
     test('update a PixelArt', () async {
@@ -66,8 +70,10 @@ void main() {
     test('list all PixelArts', () async {
       await repository.create(testPixelArt);
 
-      // TODO: 2. use the repository to list the pixelarts. expect the list of pixelarts to be longer than 0
-      fail("unimplemented test");
+      CRUDResult<List<PixelArt>> listResult = await repository.list();
+
+      expect(listResult.isSuccess, isTrue);
+      expect(listResult.value?.length, isPositive);
     });
 
     test('watch changes on a PixelArt', () async {
