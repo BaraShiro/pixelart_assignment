@@ -203,13 +203,15 @@ void main() {
     });
 
     test('PUT /:id - updates a PixelArt', () async {
-      art = art.copyWith(name: uuid.v4());
+      final newArt = art.copyWith(name: uuid.v4());
+      final serializedNewArt = newArt.serialize();
       when(() => context.request)
-          .thenAnswer((e) => Request.put(Uri.base, body: art.serialize()));
+          .thenAnswer((e) => Request.put(Uri.base, body: serializedNewArt));
 
-      final response = await pixelArtSlugRoute.onRequest(context, art.id);
+      final response = await pixelArtSlugRoute.onRequest(context, newArt.id);
       expect(response.statusCode, equals(HttpStatus.ok));
-      // TODO 5. Check response body for serialized PixelArt.
+      final responseBody = await response.body();
+      expect(responseBody, serializedNewArt);
     });
 
     test('DELETE /:id - deletes a PixelArt', () async {
