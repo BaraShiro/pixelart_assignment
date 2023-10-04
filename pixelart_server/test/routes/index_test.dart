@@ -114,7 +114,7 @@ void main() {
     final context = _MockRequestContext();
     const uuid = Uuid();
 
-    var art = PixelArt(
+    final art = PixelArt(
       id: uuid.v4(),
       name: uuid.v4(),
       description: uuid.v4(),
@@ -123,6 +123,20 @@ void main() {
       editors: [],
       pixelMatrix: [[]],
     );
+
+    final serializedArt = art.serialize();
+
+    final otherArt = PixelArt(
+      id: uuid.v4(),
+      name: uuid.v4(),
+      description: uuid.v4(),
+      width: 64,
+      height: 64,
+      editors: [],
+      pixelMatrix: [[]],
+    );
+
+    final serializedOtherArt = otherArt.serialize();
 
     Future<HivePixelArtRepository> initRepo() async {
       final repository = HivePixelArtRepository();
