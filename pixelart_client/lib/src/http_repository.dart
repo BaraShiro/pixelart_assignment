@@ -35,10 +35,11 @@ class HTTPPixelArtRepository extends AbstractPixelArtRepository {
   Future<CRUDResult<PixelArt>> read(String id) async {
     try {
       final response = await http.get(Uri.parse('$_HTTPurl/$id'));
-
-      // TODO: 17. check if response was successful and return success/failure result by deserializing the body or providing the failed crudstatus
-
-      throw UnimplementedError();
+      if(response.isSuccess) {
+        return CRUDResult.success(PixelArt.deserialize(response.body));
+      } else {
+        return CRUDResult.failure(response.statusCode.toCRUDStatus);
+      }
     } catch (e) {
       return CRUDResult.failure(CRUDStatus.NetworkError, e);
     }
