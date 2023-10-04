@@ -62,8 +62,17 @@ class HTTPPixelArtRepository extends AbstractPixelArtRepository {
 
   @override
   Future<CRUDResult<void>> delete(String id) async {
-    // TODO: 19. use HTTP DELETE to HTTPURL/[id]. Make sure to error handle and return proper crudresults.
-    throw UnimplementedError();
+    try {
+      final response = await http.delete(Uri.parse('$_HTTPurl/$id'));
+
+      if(response.isSuccess) {
+        return CRUDResult.success();
+      } else {
+        return CRUDResult.failure(response.statusCode.toCRUDStatus);
+      }
+    } catch (e) {
+      return CRUDResult.failure(CRUDStatus.NetworkError, e);
+    }
   }
 
   @override
