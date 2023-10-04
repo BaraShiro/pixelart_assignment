@@ -19,11 +19,7 @@ class HTTPPixelArtRepository extends AbstractPixelArtRepository {
   @override
   Future<CRUDResult<PixelArt>> create(PixelArt item) async {
     try {
-      // TODO: 16. Post item as serialized string to http url and await response
-
-      throw UnimplementedError();
-
-      var response;
+      final response = await http.post(Uri.parse(_HTTPurl), body: item.serialize());
 
       if (response.isSuccess) {
         return CRUDResult.success(PixelArt.deserialize(response.body));
