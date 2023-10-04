@@ -184,11 +184,12 @@ void main() {
 
     test('POST / - creates a PixelArt', () async {
       when(() => context.request)
-          .thenAnswer((e) => Request.post(Uri.base, body: art.serialize()));
+          .thenAnswer((e) => Request.post(Uri.base, body: serializedOtherArt));
 
       final response = await pixelArtRoute.onRequest(context);
       expect(response.statusCode, equals(HttpStatus.ok));
-      // TODO 3. Check response body for serialized PixelArt.
+      final responseBody = await response.body();
+      expect(responseBody, serializedOtherArt);
     });
 
     test('GET /:id - reads a PixelArt', () async {
