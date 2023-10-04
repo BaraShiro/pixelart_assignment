@@ -43,6 +43,15 @@ class HivePixelArtRepository extends AbstractPixelArtRepository {
     }
   }
 
+  Future<CRUDResult<void>> deleteAll() async {
+    try {
+      await box.clear();
+      return CRUDResult.success();
+    } catch (e) {
+      return CRUDResult.failure(CRUDStatus.DatabaseError, e);
+    }
+  }
+
   @override
   Future<CRUDResult<PixelArt>> read(String id) async {
     try {
