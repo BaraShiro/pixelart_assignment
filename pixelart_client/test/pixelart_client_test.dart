@@ -88,7 +88,11 @@ void main() {
       expect(result.status, equals(CRUDStatus.Success));
     });
 
-    // TODO: 14. Create delete fail test (on non existent id)
+    test('Fail to delete PixelArt due to not found', () async {
+      final id = "nonexistentId";
+      final result = await repository.delete(id);
+      expect(result.status, equals(CRUDStatus.NotFound));
+    });
 
     test('List PixelArts shouldNotContainArt', () async {
       final result = await repository.list();
