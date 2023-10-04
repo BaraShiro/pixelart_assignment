@@ -141,11 +141,14 @@ void main() {
       await repo.destroy();
     });
 
-    setUp(() {
+    setUp(() async {
       // Reset the mock before each test
       reset(context);
       when(() => context.read<Future<HivePixelArtRepository>>())
           .thenAnswer((_) => repoFuture);
+      // Put something to test against in the repo
+      final repo = await repoFuture;
+      await repo.create(art);
     });
 
     test('GET / - responds with a welcome message', () async {
