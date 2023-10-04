@@ -1,5 +1,6 @@
 // ignore_for_file: library_prefixes
 
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dart_frog/dart_frog.dart';
@@ -230,7 +231,16 @@ void main() {
 
       final response = await pixelArtRoute.onRequest(context);
       expect(response.statusCode, equals(HttpStatus.ok));
-      // TODO 6. Check response body for list of PixelArt.
+
+      final responseBody = await response.body();
+
+      final responseJson = jsonDecode(responseBody, reviver: (k, v) =>
+        (v is String) ? jsonDecode(v) : v) as List<dynamic>;
+
+      final parsedList = responseJson.map((val) =>
+        PixelArt.fromJson(val as Map<String, dynamic>)).toList();
+
+      expect(parsedList, isA<List<PixelArt>>());
     });
 
     test('GET / - stream returns 404 for invalid ws request', () async {
