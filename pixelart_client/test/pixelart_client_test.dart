@@ -104,18 +104,14 @@ void main() {
     });
 
     test('PixelArt Changes stream successfully', () async {
-
-          // TODO: 15. Uncomment this test when the other tests succeeed.
-
-
-/*       PixelArt art = PixelArt(
-          id: uuid.v4(),
-          name: uuid.v4(),
-          description: uuid.v4(),
-          width: 64,
-          height: 64,
-          editors: [],
-          pixelMatrix: [[]]);
+      PixelArt art = PixelArt(
+        id: uuid.v4(),
+        name: uuid.v4(),
+        description: uuid.v4(),
+        width: 64,
+        height: 64,
+        editors: [],
+        pixelMatrix: [[]]);
 
       final stream = await repository.changes(art.id);
 
@@ -134,10 +130,7 @@ void main() {
 
       await repository.update(art.id, changedArt2);
 
-      await repository.delete(art.id); */
-
-      fail("unimplemented test");
-
+      await repository.delete(art.id);
     });
   });
 }
