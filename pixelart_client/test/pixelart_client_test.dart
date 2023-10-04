@@ -83,7 +83,10 @@ void main() {
       expect(result.status, equals(CRUDStatus.NotFound));
     });
 
-    // TODO: 13. Create delete success test.
+    test('Delete PixelArt successfully', () async {
+      final result = await repository.delete(art.id);
+      expect(result.status, equals(CRUDStatus.Success));
+    });
 
     // TODO: 14. Create delete fail test (on non existent id)
 
