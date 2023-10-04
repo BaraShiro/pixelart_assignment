@@ -151,6 +151,12 @@ void main() {
       await repo.create(art);
     });
 
+    tearDown(() async {
+      // Empty the repo after each test
+      final repo = await repoFuture;
+      await repo.deleteAll();
+    });
+
     test('GET / - responds with a welcome message', () async {
       final response = route.onRequest(context);
       expect(response.statusCode, equals(HttpStatus.ok));
