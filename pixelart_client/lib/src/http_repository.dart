@@ -13,8 +13,8 @@ class HTTPPixelArtRepository extends AbstractPixelArtRepository {
   final String _WSurl;
 
   const HTTPPixelArtRepository({required this.url})
-      : _HTTPurl = "http://" + url,
-        _WSurl = "ws://" + url;
+      : _HTTPurl = "http://$url",
+        _WSurl = "ws://$url";
 
   @override
   Future<CRUDResult<PixelArt>> create(PixelArt item) async {
