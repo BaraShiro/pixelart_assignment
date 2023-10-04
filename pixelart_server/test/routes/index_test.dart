@@ -198,7 +198,8 @@ void main() {
 
       final response = await pixelArtSlugRoute.onRequest(context, art.id);
       expect(response.statusCode, equals(HttpStatus.ok));
-      // TODO 4. Check response body for serialized PixelArt.
+      final responseBody = await response.body();
+      expect(responseBody, serializedArt);
     });
 
     test('PUT /:id - updates a PixelArt', () async {
