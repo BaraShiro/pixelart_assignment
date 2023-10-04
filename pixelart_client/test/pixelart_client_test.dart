@@ -47,7 +47,11 @@ void main() {
       expect(result.status, equals(CRUDStatus.Success));
     });
 
-    // TODO: 12. Create read success test
+    test('Read PixelArt successfully', () async {
+      final result = await repository.read(art.id);
+      expect(result.status, equals(CRUDStatus.Success));
+      expect(result.value, equals(art));
+    });
 
     test('Fail to read PixelArt due to not found', () async {
       final id = "nonexistentId";
