@@ -17,10 +17,14 @@ Future<Response> onRequest(RequestContext context, String pixelArtId) async {
 Future<Response> get(RequestContext context, String pixelArtId) async {
   final repository = await context.read<Future<HivePixelArtRepository>>();
 
-  // TODO: 9. Read from the repository. Await the request and return a result. Make sure to error handle.
-  //          Take inspiration from the put method
+  final result = await repository.read(pixelArtId);
 
-  throw UnimplementedError();
+  if (result.isSuccess && result.value != null) {
+    final pixelArt = result.value!;
+    return result.toHTTPSuccess(body: pixelArt.serialize());
+  } else {
+    return result.toHTTPError();
+  }
 }
 
 Future<Response> put(RequestContext context, String pixelArtId) async {
