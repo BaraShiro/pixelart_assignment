@@ -77,10 +77,6 @@ void main() {
     });
 
     test('watch changes on a PixelArt', () async {
-      // TODO: 11. Uncomment this test when all other tests succeed.
-
-      /*    
-
       await repository.delete(testPixelArt.id);
 
       final stream = await repository.changes(testPixelArt.id);
@@ -94,7 +90,7 @@ void main() {
       expect(
           stream,
           emitsInOrder(
-              [testPixelArt, changedArt, changedArt1, changedArt2, null]));
+              [testPixelArt, changedArt, changedArt1, changedArt2, null],),);
 
       await repository.create(testPixelArt);
 
@@ -104,9 +100,8 @@ void main() {
 
       await repository.update(testPixelArt.id, changedArt2);
 
-      await repository.delete(testPixelArt.id); */
+      await repository.delete(testPixelArt.id);
 
-      fail("unimplemented test");
     });
   });
 
