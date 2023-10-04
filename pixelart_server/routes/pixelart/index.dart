@@ -19,9 +19,8 @@ Future<Response> post(RequestContext context) async {
 
   final request = context.request;
 
-  // TODO: 10. Deserialize the request body to retrieve a pixelArt for creation.
-  String serializedArt = await request.body();
-  PixelArt pixelArt = PixelArt.deserialize(serializedArt);
+  final serializedArt = await request.body();
+  final pixelArt = PixelArt.deserialize(serializedArt);
 
   final result = await repository.create(pixelArt);
 

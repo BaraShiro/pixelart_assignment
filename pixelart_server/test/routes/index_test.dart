@@ -40,9 +40,8 @@ void main() {
     });
 
     test('create and read a PixelArt', () async {
-
-      CRUDResult<PixelArt> createResult = await repository.create(testPixelArt);
-      CRUDResult<PixelArt> readResult = await repository.read(testPixelArt.id);
+      final createResult = await repository.create(testPixelArt);
+      final readResult = await repository.read(testPixelArt.id);
       expect(createResult.isSuccess, isTrue);
       expect(readResult.isSuccess, isTrue);
       expect(readResult.value, testPixelArt);
@@ -71,7 +70,7 @@ void main() {
     test('list all PixelArts', () async {
       await repository.create(testPixelArt);
 
-      CRUDResult<List<PixelArt>> listResult = await repository.list();
+      final listResult = await repository.list();
 
       expect(listResult.isSuccess, isTrue);
       expect(listResult.value?.length, isPositive);
@@ -178,7 +177,7 @@ void main() {
       expect(
         response.body(),
         completion(
-            contains('This is an API for crating and editing pixel art :-)')),
+            contains('This is an API for crating and editing pixel art :-)'),),
       );
     });
 
@@ -224,14 +223,14 @@ void main() {
     test('DELETE /:id - fails to delete non existing', () async {
       when(() => context.request).thenAnswer((e) => Request.delete(Uri.base));
       final response =
-          await pixelArtSlugRoute.onRequest(context, "nonExistingId");
+          await pixelArtSlugRoute.onRequest(context, 'nonExistingId');
       expect(response.statusCode, equals(HttpStatus.notFound));
     });
 
     test('GET / - lists all PixelArts', () async {
       when(() => context.request).thenAnswer((e) => Request.get(
             Uri.base,
-          ));
+          ),);
 
       final response = await pixelArtRoute.onRequest(context);
       expect(response.statusCode, equals(HttpStatus.ok));
@@ -239,10 +238,10 @@ void main() {
       final responseBody = await response.body();
 
       final responseJson = jsonDecode(responseBody, reviver: (k, v) =>
-        (v is String) ? jsonDecode(v) : v) as List<dynamic>;
+        (v is String) ? jsonDecode(v) : v,) as List<dynamic>;
 
       final parsedList = responseJson.map((val) =>
-        PixelArt.fromJson(val as Map<String, dynamic>)).toList();
+        PixelArt.fromJson(val as Map<String, dynamic>),).toList();
 
       expect(parsedList, isA<List<PixelArt>>());
     });
